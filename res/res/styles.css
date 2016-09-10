@@ -1,0 +1,109 @@
+body {
+	font-family: Arial;
+	font-size: 16px;
+}
+
+.body {
+	padding: 8px;
+}
+
+.menuHead {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.checkboxLabel {
+}
+
+.link {
+	stroke: black;
+	stroke-opacity: .6;
+}
+
+.nodeTable {
+	fill: #0066CC;
+	background-color: #0066CC;
+	color: white;
+	border-radius: 4px;
+}
+
+.virtNodeTable {
+	fill: #FF9700;
+	background-color: #FF9700;
+	color: black;
+	border-radius: 4px;
+}
+
+.appTable {
+	background-color: #1CA9E3;
+	border-radius: 4px;
+	color: black;
+	fill: #1CA9E3;
+}
+
+table {
+	overflow: hidden;
+	border-collapse: collapse;
+	font-family: Droid Sans, sans-serif;
+	font-size: 16px;
+	text-align: center;
+}
+
+table.nodeTable {
+	width: 170px;
+	height: 90px;
+}
+
+table.virtNodeTable {
+	width: 170px;
+	height: 90px;
+}
+
+.red {
+	fill: red;
+	background-color: red;
+}
+
+.yellow {
+	fill: gold;
+	background-color: gold;
+	color: black;
+}
+
+.gray {
+	fill: gray;
+	background-color: gray;
+}
+
+.tableTitle {
+	height: 21px;
+	text-align: center;
+}
+
+td {
+	border-top: 1.5px solid white;
+	border-left: 1.5px solid white;
+	border-right: 1.5px solid white;
+}
+
+td:first-child {
+	border-left: none;
+}
+
+td:last-child {
+	border-right: none;
+}
+
+.appTable td {
+	border-color: black;
+	padding: 3px 8px;
+}
+
+.btn-scp {
+	font-size: 15px;
+	width: 120px;
+}
+
+.btn-row-scp {
+	padding-bottom: 10px;
+}

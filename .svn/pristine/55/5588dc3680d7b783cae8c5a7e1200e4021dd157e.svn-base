@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="pack-zip-file" name="eu.ascens_ist.cloud.monitor">
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+
+	<property name="products.location" value="products/"/>
+    <property name="monitor.location" value="./"/>
+	<property name="monitor.jar.name" value="SCP Monitor" />
+	<property name="monitor.zip.name" value="SCP Monitor" />
+	
+	<property name="config.monitorPort" value="8181"/>
+
+	
+    <path id="eu.ascens_ist.cloud.monitor.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/javax.servlet_3.0.0.v201112011016.jar"/>
+        <pathelement location="lib/log4j-1.2.17.jar"/>
+        <pathelement location="lib/gson-2.3.1.jar"/>
+        <pathelement location="lib/java-json.jar"/>
+        <pathelement location="lib/jetty-client-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-continuation-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-http-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-io-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-security-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-server-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-servlet-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-servlets-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-util-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-servlets-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/jetty-util-8.1.16.v20140903.jar"/>
+        <pathelement location="lib/slf4j-api-1.7.9.jar"/>
+        <pathelement location="lib/slf4j-log4j12-1.7.9.jar"/>
+        <pathelement location="lib/scp-iaas.jar"/>
+    </path>
+	
+	<target name="clean-before">
+		<antcall target="clean"></antcall>
+		<delete dir="${products.location}" />
+	</target>
+  	
+	<target name="clean">
+		<delete file="${products.location}${monitor.jar.name}.sh" />
+		<delete file="${products.location}${monitor.jar.name}.bat" />
+		<delete file="${products.location}${monitor.jar.name}.jar" />
+		<delete file="${products.location}${monitor.jar.name}.jar" />
+		<delete file="${products.location}monitor.conf" />
+	</target>
+              	
+    <target name="init" depends="clean-before">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="res">
+                <exclude name="**/*.launch"/>
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+              	
+    <target depends="init" name="build">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <src path="res"/>
+            <classpath refid="eu.ascens_ist.cloud.monitor.classpath"/>
+        </javac>
+    </target>
+	
+    <target name="create-jar" depends="build">
+    	<mkdir dir="${products.location}"/>
+        <jar destfile="${products.location}${monitor.jar.name}.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="eu.ascens_ist.scp.monitor.MonitorServer"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ javax.servlet_3.0.0.v201112011016.jar log4j-1.2.17.jar gson-2.3.1.jar java-json.jar jetty-client-8.1.16.v20140903.jar jetty-continuation-8.1.16.v20140903.jar jetty-http-8.1.16.v20140903.jar jetty-io-8.1.16.v20140903.jar jetty-security-8.1.16.v20140903.jar jetty-server-8.1.16.v20140903.jar jetty-servlet-8.1.16.v20140903.jar jetty-servlets-8.1.16.v20140903.jar jetty-util-8.1.16.v20140903.jar commons-io-2.4.jar commons-lang3-3.3.2.jar scp-iaas.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="${monitor.location}bin"/>
+            <zipfileset dir="${monitor.location}lib" includes="javax.servlet_3.0.0.v201112011016.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="log4j-1.2.17.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="gson-2.3.1.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="java-json.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-client-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-continuation-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-http-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-io-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-security-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-server-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-servlet-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-servlets-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="jetty-util-8.1.16.v20140903.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="slf4j-api-1.7.9.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="slf4j-log4j12-1.7.9.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="commons-io-2.4.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="commons-lang3-3.3.2.jar"/>
+            <zipfileset dir="${monitor.location}lib" includes="scp-iaas.jar"/>
+        </jar>
+    </target>
+
+	<target name="create-sh-file" depends="">
+		<echo message="Create executable shell script"/>
+		<echo file="${products.location}${monitor.jar.name}.sh">#!/bin/bash
+			
+DIR=$$( cd "$$( dirname "$${BASH_SOURCE[0]}" )" &amp;&amp; pwd )
+java -jar "$$DIR/${monitor.jar.name}.jar"</echo>
+		<chmod perm="+x" file="${products.location}${launcher.jar.name}.sh" />
+	</target>
+	
+	<target name="create-bat-file" depends="">
+		<echo message="Create executable bat script"/>
+		<echo file="${products.location}${monitor.jar.name}.bat">java -jar "%~dp0${monitor.jar.name}.jar"</echo>
+	</target>
+	
+	<target name="create-config-file" depends="">
+		<echo message="Create config file"/>
+		<echo file="${products.location}monitor.conf"># Configuration file for SCP MonitorServer 
+MonitorPort:${config.monitorPort}
+#ZimoryServer:ZimoryServer
+#ZimoryAPIPath:PathToAPI
+#ZimoryCertPath:PathToCertFileRelativeToJar
+#ZimoryCertPass:CertPassPhrase
+#ZimoryAppliance:24
+#ZimoryNetwork:2</echo>
+	</target>
+	
+	<target name="pack-zip-file" depends="create-jar, create-sh-file, create-bat-file, create-config-file">
+		<delete file="${products.location}${monitor.zip.name}.zip" />
+		<zip destfile="${products.location}${monitor.zip.name}.zip">
+		    <zipfileset dir="${products.location}" includes="*.jar" />
+		    <zipfileset dir="${products.location}" includes="*.sh" filemode="755"/>
+		    <zipfileset dir="${products.location}" includes="*.bat"/>
+		    <zipfileset dir="${products.location}" includes="*.conf"/>
+		</zip>
+		<antcall target="clean"></antcall>
+	</target>
+</project>

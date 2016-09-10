@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="cache-control" content="no-cache">
+	<title>Science Cloud Visualisation</title>
+ 	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/styles.css" />
+	<script type="text/javascript" src="/lib/jquery/jquery-1.11.1.min.js"></script>
+ 	<script type="text/javascript" src="/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/lib/d3js/d3.v3.js"></script>
+	<script type="text/javascript" src="/scripts/config.js"></script>
+	<script type="text/javascript" src="/scripts/util.js"></script>
+	<script type="text/javascript" src="/scripts/Legend.js"></script>
+	<script type="text/javascript" src="/scripts/IaaSDemo.js"></script>
+	<script type="text/javascript" src="/scripts/VoluntaryDemo.js"></script>
+</head>
+<body class="body">
+	 <svg x="0" y="0" width="1680" height="1050" id="svg">
+		<image id="ascensLogo" x="0" y="0" height="70" width="400" xlink:href="/images/ascens_logo_new.png"></image>
+		<image id="euFlag" x="0" y="700" height="100" width="100" xlink:href="/images/euFlag.jpg"></image>
+		<image id="frameworkLogo" x="0" y="800" height="90" width="100" xlink:href="/images/framework.jpg"></image>
+		<svg x="0" y="90" id="LegendBox">
+			<path d="M 0 0 h 270 v 140 h -270" style="stroke-width: 0.6; fill: none; stroke: black;"></path>
+			<text class="menuHead" x="10" y="25">Legend</text>
+			<g>
+				<rect class="nodeTable" x="10" y="40" width="20" height="20" rx="4" ry="4"></rect>
+				<text x="40" y="55">Voluntary Node</text>
+				
+				<rect class="virtNodeTable" x="10" y="70" width="20" height="20" rx="4" ry="4"></rect>
+				<text x="40" y="85">Virtualized Node</text>
+				
+				<rect class="appTable" x="10" y="100" width="20" height="20" rx="4" ry="4"></rect>
+				<text x="40" y="115">App Table</text>
+				
+				<rect class="gray" x="170" y="40" width="20" height="20" rx="4" ry="4"></rect>
+				<rect class="red" x="170" width="20" height="5" y="45"></rect>
+				<text x="200" y="55">Critical</text>
+				
+				<rect class="gray" x="170" y="70" width="20" height="20" rx="4" ry="4"></rect>
+				<rect class="yellow" x="170" y="75" width="20" height="5"></rect>
+				<text x="200" y="85">Alarming</text>
+			</g>
+		</svg>
+		<svg x="0" y="250"  id="IaaSBox">
+			<path d="M 0 0 h 270 v 180 h -270" style="stroke-width: 0.6; fill: none; stroke: black;"></path>
+			<text class="menuHead" x="10" y="25">IaaS</text>
+			<g>
+				<foreignObject x="10" y="40" width="270" height="270">
+					<div class="btn-group btn-row-scp" role="group">
+						<button id="setHighCPULoadButton" type="button" class="btn btn-default btn-scp">
+							Set High CPU
+						</button>
+						<div class="btn-group" role="group">
+							<button id="deployAppIaaSButton" class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false"> 
+								Deploy App <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li id="deployAppIaaSChatOption"><a>Chatapp</a></li>
+								<li id="deployAppIaaSExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="btn-group btn-row-scp" role="group">
+						<div class="btn-group" role="group">
+							<button id="lowerCPUButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+								Lower CPU <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="lowerCPUIaaSChatOption"><a>Chatapp</a></li>
+								<li id="lowerCPUIaaSExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+						<div class="btn-group" role="group">
+							<button id="undeployAppIaaSButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+								Undeploy App <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li id="undeployAppIaaSChatOption"><a>Chatapp</a></li>
+								<li id="undeployAppIaaSExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+					</div>	
+					<div class="btn-group btn-row-scp" role="group" style="display: inline-block">
+						<button id="resetCPULoadButton" type="button" class="btn btn-default btn-scp">
+							Reset CPU
+						</button>
+					</div>				
+				</foreignObject>
+			</g>
+		</svg>
+		<svg x="0" y="450"  id="VoluntaryBox">
+			<path d="M 0 0 h 270 v 180 h -270" style="stroke-width: 0.6; fill: none; stroke: black;"></path>
+			<text class="menuHead" x="10" y="25">Voluntary</text>
+			<g>
+				<foreignObject x="10" y="40" width="270" height="270">
+					<div class="btn-group btn-row-scp" role="group">
+						<div class="btn-group" role="group">
+							<button id="deployAppVoluntaryButton" class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false"> 
+								Deploy App <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="deployAppVoluntaryChatOption"><a>Chatapp</a></li>
+								<li id="deployAppVoluntaryExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+						<div class="btn-group" role="group">
+							<button id="initFailButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+								Initiator Fail <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li id="initFailChatOption"><a>Chatapp</a></li>
+								<li id="initFailExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="btn-group btn-row-scp" role="group">
+						<div class="btn-group" role="group">
+							<button id="newInitButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+								New Initiator <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li id="newInitChatOption"><a>Chatapp</a></li>
+								<li id="newInitExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+						<div class="btn-group" role="group">
+							<button id="execFailButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+								Executor Fail <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-right" role="menu">
+								<li id="execFailChatOption"><a>Chatapp</a></li>
+								<li id="execFailExchangeOption"><a>Exchange</a></li>
+							</ul>
+						</div>
+					</div>	
+					<div class="btn-group btn-row-scp" role="group" style="display: inline-block">
+						<button id="undeployAppVoluntaryButton"class="btn btn-default btn-scp dropdown-toggle" type="button"  data-toggle="dropdown" aria-expanded="false">
+							Undeploy App <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu">
+							<li id="undeployAppVoluntaryChatOption"><a>Chatapp</a></li>
+							<li id="undeployAppVoluntaryExchangeOption"><a>Exchange</a></li>
+						</ul>
+					</div>				
+				</foreignObject>
+			</g>
+		</svg>
+	</svg>
+  	<script type="text/javascript" src="/scripts/visualization.js"></script>
+</body>
+</html>
